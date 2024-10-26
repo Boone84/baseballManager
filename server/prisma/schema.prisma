@@ -1,0 +1,41 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id          Int     @id @default(autoincrement())
+  username    String  @unique
+  password    String
+  role        String  @default("player")
+  teamId      Int?    
+  Team        Team?   @relation(fields: [teamId], references: [id]) 
+  managedTeam Team?   @relation("Manager")
+}
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String
+  managerId Int?     @unique 
+  Manager   User?    @relation("Manager", fields: [managerId], references: [id]) 
+  players   User[]
+  chat      Chat[]
+}
+
+model Chat {
+  id       Int    @id @default(autoincrement())
+  teamId   Int
+  message  String
+  Team     Team   @relation(fields: [teamId], references: [id])
+}
+
+
+model Event {
+  id          Int     @id @default(autoincrement())
+  date        DateTime
+  description String
+}

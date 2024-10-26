@@ -1,0 +1,18 @@
+{
+  "name": "baseball-league-manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd server && npm run dev\" \"cd client && npm run client\"",
+    "server": "cd server && npm run dev",
+    "client": "cd client && npm start",
+    "dev": "npm run start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
