@@ -67,8 +67,28 @@ const loginUser = async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+// server/controllers/authController.js
+const assignAdmin = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: parseInt(userId) },
+      data: {
+        role: 'admin',
+      },
+    });
+    res.json({ message: 'User assigned as admin successfully', updatedUser });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error assigning admin' });
+  }
+};
 
 module.exports = {
   registerUser,
   loginUser,
+  assignAdmin, // Make sure this function is exported
 };
+
+
